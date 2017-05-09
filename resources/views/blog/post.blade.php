@@ -11,7 +11,7 @@
     {!! nl2br(e($post->content)) !!}
     <hr>
     <button class="btn btn-primary" onclick="history.go(-1)">
-        « Back
+        « 返回
     </button>
 </div>
 </body>

@@ -14,6 +14,7 @@
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+Auth::routes();
 Route::get('/', function () {
     return redirect('/blog');
 });
@@ -25,10 +26,11 @@ Route::get('admin',function(){
     return redirect('/admin/post');
 });
 Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function () {
-    resource('admin/post', 'PostController');
-    resource('admin/tag', 'TagController');
-    get('admin/upload', 'UploadController@index');
+    Route::resource('admin/post', 'PostController');
+    Route::resource('admin/tag', 'TagController');
+    Route::get('admin/upload', 'UploadController@index');
 });
-Route::get('/auth/login','Auth\AuthController@getLogin');
-Route::get('/auth/login','Auth\AuthController@postLogin');
-Route::get('/auth/logout','Auth\AuthController@getLogout');
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
