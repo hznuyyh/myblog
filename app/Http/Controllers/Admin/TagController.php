@@ -42,4 +42,34 @@ class TagController extends Controller
 
 		return redirect('/admin/tag')->withSuccess("标签 '$tag->tag' 已创建。");
 	}
+	public function edit($id)
+	{
+		$tag = Tag::findOrFail($id);
+		$data = ['id' => $id];
+		foreach (array_keys($this->fields) as $field) {
+			$data[$field] = old($field, $tag->$field);
+		}
+
+		return view('admin.tag.edit', $data);
+	}
+	public function update(TagCreateRequest $request, $id)
+	{
+		$tag = Tag::findOrFail($id);
+
+		foreach (array_keys($this->fields ) as $field) {
+			$tag->$field = $request->get($field);
+		}
+		$tag->save();
+
+		return redirect("/admin/tag/$id/edit")
+			->withSuccess("修改成功。");
+	}
+	public function destroy($id)
+	{
+		$tag = Tag::findOrFail($id);
+		$tag->delete();
+
+		return redirect('/admin/tag')
+			->withSuccess("标签'$tag->tag' 已删除.");
+	}
 }
